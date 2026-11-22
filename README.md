@@ -18,11 +18,12 @@ Cron (cada 3 h): `0 */3 * * * cd /ruta/gpu-checker && python -m gpu check`
 | Tienda | Estado |
 |---|---|
 | LDLC | ✅ verificada con HTML real |
-| Alternate | ✅ verificada con HTML real (solo 1ª página, 24 resultados) |
+| Alternate | ✅ verificada con HTML real, con paginación (hasta 4 páginas) |
 | Amazon.es | ⚠️ parser verificado, pero Amazon responde 503 a menudo; incluye vendedores marketplace |
 | Nvidia FE | ❓ **sin verificar**: el formato del API del marketplace es una suposición |
 | PcComponentes, Neobyte | ⛔ Cloudflare devuelve 403 a peticiones simples; haría falta navegador real |
-| Coolmod, Casemod | ⛔ sin probar (redirección / sin respuesta) |
+| Coolmod | ⛔ accesible con cookies, pero su buscador ignora la consulta (devuelve siempre las mismas 25 tarjetas) y daría cobertura parcial; falta encontrar un endpoint de búsqueda real |
+| Casemod | ⛔ sin respuesta desde el entorno de desarrollo |
 
 Los tests usan HTML real guardado en `tests/fixtures/`, así que si una tienda cambia
 su web, el scraper falla de forma visible en `check` en vez de dar datos falsos.

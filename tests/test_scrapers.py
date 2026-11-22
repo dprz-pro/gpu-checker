@@ -45,3 +45,19 @@ def test_filter_rules():
     assert not is_rtx5090_card("Portátil MSI Titan con RTX 5090")
     assert not is_rtx5090_card("Waterblock para RTX 5090")
     assert not is_rtx5090_card("MSI RTX 5080 16G")
+
+
+def test_alternate_pagination_stops_when_no_new_items():
+    html = (FX / "alternate.html").read_text(encoding="utf8")
+    calls = []
+
+    class R:
+        text = html
+
+    def fake_get(url):
+        calls.append(url)
+        return R()
+
+    items = alternate.fetch(fake_get)
+    assert len(calls) == 2  # la 2ª página repite los mismos productos -> corta
+    assert len({i.url for i in items}) == len(items)

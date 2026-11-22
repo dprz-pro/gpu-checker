@@ -29,8 +29,20 @@ def parse(html: str) -> list[Listing]:
     return out
 
 
-def fetch() -> list[Listing]:
-    listings = parse(get(URL).text)
+MAX_PAGES = 4
+
+
+def fetch(get_page=get) -> list[Listing]:
+    """Recorre páginas hasta que una no aporte ninguna 5090 nueva."""
+    listings: list[Listing] = []
+    seen: set[str] = set()
+    for page in range(1, MAX_PAGES + 1):
+        batch = parse(get_page(f"{URL}&page={page}").text)
+        new = [l for l in batch if l.url not in seen and "5090" in l.title]
+        if not new:
+            break
+        seen.update(l.url for l in new)
+        listings += new
     if not listings:
         raise ScraperError("Alternate: sin productos (¿cambió el HTML?)")
     return listings
