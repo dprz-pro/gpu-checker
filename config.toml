@@ -1,0 +1,13 @@
+# Precio máximo (€) que consideras decente. Las ofertas en stock por debajo
+# de este valor se destacan en consola y en el informe.
+target_price = 2500
+
+# Descarta precios fuera de este rango (errores de scraping, accesorios...)
+min_price = 1000
+max_price = 20000
+
+[stores]
+ldlc = true
+alternate = true
+amazon = true     # incluye vendedores marketplace: revisa el vendedor antes de comprar
+nvidia_fe = true  # Founders Edition (ver README: pendiente de verificar)
